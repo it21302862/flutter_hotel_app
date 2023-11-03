@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hotel_application/hotel_ui/hotel_list_model.dart';
 import 'package:hotel_application/hotel_ui/hotel_theme.dart';
+import 'package:intl/intl.dart';
 
 class HotelHomeScreen extends StatefulWidget {
   const HotelHomeScreen({super.key});
@@ -9,8 +10,11 @@ class HotelHomeScreen extends StatefulWidget {
   State<HotelHomeScreen> createState() => _HotelHomeScreenState();
 }
 
-class _HotelHomeScreenState extends State<HotelHomeScreen> {
+class _HotelHomeScreenState extends State<HotelHomeScreen>
+    with TickerProviderStateMixin {
   List<HotelListData> hotelList = HotelListData.hotelList;
+  DateTime startDate = DateTime.now();
+  DateTime endDate = DateTime.now().add(const Duration(days: 5));
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +32,8 @@ class _HotelHomeScreenState extends State<HotelHomeScreen> {
                     // Return the Column widget with its children
 
                     return Column(
-                      children: <Widget>[getMyHotelTextUI()],
+                      // children: <Widget>[getMyHotelTextUI()],
+                      children: <Widget>[getMyHotelTextUI(), getTimeDateUI()],
                     );
                   },
                       childCount:
@@ -190,6 +195,110 @@ class _HotelHomeScreenState extends State<HotelHomeScreen> {
                   ))
             ])));
   }
+
+  getTimeDateUI() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 18, bottom: 16),
+      child: Row(
+        children: <Widget>[
+          Expanded(
+              child: Row(
+            children: <Widget>[
+              Material(
+                color: Colors.transparent,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      const SizedBox(height: 8),
+                      Text(
+                        "${DateFormat('dd MMM').format(startDate)} to ${DateFormat('dd MMM , yyyy').format(endDate)}",
+                        style: const TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          )),
+          const Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                SizedBox(height: 8),
+                Padding(
+                  padding: EdgeInsets.only(right: 4), // Add margin to the icon
+                  child: Icon(
+                    Icons.filter_list,
+                    size: 24,
+                    color: Colors.black,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: 8), // Add margin to the text
+                  child: Text(
+                    'Hotels',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
+
+          // Padding(
+          //   padding: const EdgeInsets.only(right: 8),
+          //   child: Container(
+          //     width: 1,
+          //     height: 42,
+          //     color: Colors.grey.withOpacity(0.8),
+          //   ),
+          // ),
+          // Expanded(
+          //     child: Row(
+          //   children: <Widget>[
+          //     Material(
+          //       color: Colors.transparent,
+          //       child: Padding(
+          //         padding:
+          //             const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+          //         child: Column(
+          //           crossAxisAlignment: CrossAxisAlignment.start,
+          //           mainAxisAlignment: MainAxisAlignment.center,
+          //           children: <Widget>[
+          //             Text(
+          //               'Number of Rooms',
+          //               style: TextStyle(
+          //                   fontWeight: FontWeight.w100,
+          //                   fontSize: 16,
+          //                   color: Colors.grey.withOpacity(0.8)),
+          //             ),
+          //             const SizedBox(height: 8),
+          //             const Text(
+          //               '1 Room - 2 Adults',
+          //               style: TextStyle(
+          //                 fontWeight: FontWeight.w100,
+          //                 fontSize: 16,
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //       ),
+          //     )
+          //   ],
+          // ))
+        ],
+      ),
+    );
+  }
 }
 
 class HotelListWidget extends StatelessWidget {
@@ -234,17 +343,17 @@ class HotelListWidget extends StatelessWidget {
                     child: Container(
                       padding: const EdgeInsets.all(6.0),
                       decoration: BoxDecoration(
-                        color:const Color.fromARGB(255, 58, 165, 61),
+                        color: Color.fromRGBO(58, 165, 61, 1),
                         borderRadius: BorderRadius.circular(7.0),
                       ),
-                      // child:Text(
-                      //   hotel.roomSold,
-                      //   style:const TextStyle(
-                      //     color: Colors.white,
-                      //     fontSize: 14,
-                      //     fontWeight: FontWeight.bold,
-                      //   ),
-                      // ),
+                      child: Text(
+                        hotel.roomSold,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 13,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
                     ),
                   ),
                   Container(
@@ -261,13 +370,26 @@ class HotelListWidget extends StatelessWidget {
                             height: 1.5,
                           ),
                         ),
-                        Text(
-                          hotel.titleTxt,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              hotel.titleTxt,
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              hotel.salary, // Align to the right
+                              style: const TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
                         // Add other details as needed
                       ],

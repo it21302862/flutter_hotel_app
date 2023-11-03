@@ -3,14 +3,14 @@ class HotelListData {
   String titleTxt;
   String subTxt;
   String roomSold;
- 
+  String salary;
 
   HotelListData({
     this.imagePath = '',
     this.titleTxt = '',
     this.subTxt = '',
-    this.roomSold ='',
-  
+    this.roomSold = '',
+    this.salary = '',
   });
 
   static List<HotelListData> hotelList = <HotelListData>[
@@ -18,32 +18,36 @@ class HotelListData {
       imagePath: 'assets/hotels/hotel_5.jpg',
       titleTxt: 'Grand Royal Hotel',
       subTxt: 'Wembley, London',
-      roomSold: '3 rooms ',
+      roomSold: '3 Rooms SOLD',
+      salary: '\$358',
     ),
     HotelListData(
       imagePath: 'assets/hotels/hotel_4.jpg',
       titleTxt: 'Queen Hotel',
       subTxt: 'Wembley, London',
-      roomSold: 'Grand Royal Hotel',
+      roomSold: '5 Rooms SOLD',
+      salary: '\$200',
     ),
     HotelListData(
       imagePath: 'assets/hotels/hotel_3.jpg',
       titleTxt: 'Grand Royal Hotel',
       subTxt: 'Wembley, London',
-      roomSold: 'Grand Royal Hotel',   
+      roomSold: '2 Rooms SOLD',
+      salary: '\$191',
     ),
     HotelListData(
       imagePath: 'assets/hotels/hotel_2.jpg',
       titleTxt: 'Queen Hotel',
       subTxt: 'Wembley, London',
-      roomSold: 'Grand Royal Hotel',
+      roomSold: '7 Rooms SOLD',
+      salary: '\$200',
     ),
     HotelListData(
       imagePath: 'assets/hotels/hotel_1.jpg',
       titleTxt: 'Grand Royal Hotel',
       subTxt: 'Wembley, London',
-      roomSold: 'Grand Royal Hotel',
-      
+      roomSold: '10 Rooms SOLD',
+      salary: '\$250',
     ),
   ];
 }
