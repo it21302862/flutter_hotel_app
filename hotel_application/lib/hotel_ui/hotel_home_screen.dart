@@ -16,6 +16,22 @@ class _HotelHomeScreenState extends State<HotelHomeScreen>
   DateTime startDate = DateTime.now();
   DateTime endDate = DateTime.now().add(const Duration(days: 5));
 
+  Future<void> _selectDateRange(BuildContext context) async {
+    final DateTimeRange? picked = await showDateRangePicker(
+      context: context,
+      firstDate: DateTime(2023),
+      lastDate: DateTime(2024),
+      initialDateRange: DateTimeRange(start: startDate, end: endDate),
+    );
+
+    if (picked != null) {
+      setState(() {
+        startDate = picked.start;
+        endDate = picked.end;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -205,26 +221,36 @@ class _HotelHomeScreenState extends State<HotelHomeScreen>
               child: Row(
             children: <Widget>[
               Material(
-                color: Colors.transparent,
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      const SizedBox(height: 8),
-                      Text(
-                        "${DateFormat('dd MMM').format(startDate)} to ${DateFormat('dd MMM , yyyy').format(endDate)}",
-                        style: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w600,
-                        ),
+                  color: Colors.transparent,
+                  child: GestureDetector(
+                    onTap: () {
+                      _selectDateRange(context);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 4, horizontal: 8),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const SizedBox(height: 8),
+                          const Icon(
+                            Icons.calendar_today,
+                            color: Color.fromARGB(255, 6, 7, 8),
+                            size: 20,
+                          ),
+                          const SizedBox(width: 3),
+                          Text(
+                            "${DateFormat('dd MMM').format(startDate)} to ${DateFormat('dd MMM , yyyy').format(endDate)}",
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-              )
+                    ),
+                  )),
             ],
           )),
           const Expanded(
@@ -233,10 +259,10 @@ class _HotelHomeScreenState extends State<HotelHomeScreen>
               children: [
                 SizedBox(height: 8),
                 Padding(
-                  padding: EdgeInsets.only(right: 4), // Add margin to the icon
+                  padding: EdgeInsets.only(right: 6), // Add margin to the icon
                   child: Icon(
                     Icons.filter_list,
-                    size: 24,
+                    size: 20,
                     color: Colors.black,
                   ),
                 ),
@@ -245,7 +271,7 @@ class _HotelHomeScreenState extends State<HotelHomeScreen>
                   child: Text(
                     'Hotels',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -337,13 +363,18 @@ class HotelListWidget extends StatelessWidget {
                     height: 150,
                     fit: BoxFit.cover,
                   ),
+                  const Positioned(
+                    top: 12,
+                    right: 12, 
+                    child: Icon(Icons.more_vert), // Three dots icon
+                  ),
                   Positioned(
                     top: 12,
                     left: 12,
                     child: Container(
                       padding: const EdgeInsets.all(6.0),
                       decoration: BoxDecoration(
-                        color: Color.fromRGBO(58, 165, 61, 1),
+                        color: const Color.fromRGBO(58, 165, 61, 1),
                         borderRadius: BorderRadius.circular(7.0),
                       ),
                       child: Text(
